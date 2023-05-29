@@ -28,7 +28,7 @@ public:
 
 	void animate(sf::Time time);
 
-	void setAnimationType();
+	//void setAnimationType();
 
 	void setAnimationSpeed(float animation_speed_per_second);
 

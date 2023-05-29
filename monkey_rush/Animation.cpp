@@ -14,6 +14,7 @@ bool Animation::animationChange(sf::Time time)
 
 Animation::Animation()
 {
+	frame_size = { 0,0 };
 }
 
 Animation::Animation(sf::Vector2f size)
@@ -26,7 +27,7 @@ Animation::Animation(sf::Vector2f size, sf::Texture &texture)
 	:sf::RectangleShape(size)
 {
 	setTexture(&texture);
-	Animation::texture_size = { texture.getSize().x,texture.getSize().y };
+	Animation::texture_size = static_cast<sf::Vector2f>(texture.getSize());
 }
 
 void Animation::animate(sf::Time time)
