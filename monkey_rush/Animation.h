@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include<iostream>
 
 /*
 Klasa zajmuj¹ca siê obs³ug¹ animacji

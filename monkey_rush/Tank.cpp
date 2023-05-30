@@ -5,5 +5,5 @@
 Tank::Tank(sf::Vector2f position)
 	:Enemy(position)
 {
-	setTexture("img\\Tank.png");
+	Enemy::setTexture("img\\Tank.png");
 }

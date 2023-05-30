@@ -9,6 +9,7 @@ void Enemy::setTexture(std::string path = "img\\default.png")
 Enemy::Enemy(sf::Vector2f position)
 	:Entity(sf::Vector2f(64,64))
 {
+	velocity = 100;
 	setPosition(position);
 	setTexture();
 }

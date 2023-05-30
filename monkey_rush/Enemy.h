@@ -5,7 +5,7 @@
 class Enemy :
     public Entity
 {
-    float velocity = 100;
+    float velocity;
 
 protected:
     void setTexture(std::string path);

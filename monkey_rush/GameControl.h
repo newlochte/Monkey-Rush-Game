@@ -17,7 +17,6 @@ class GameControl
 	Player player;
 
 	std::vector<std::unique_ptr<Enemy>> enemies;
-	Tank enm;
 
 	bool is_controller_connected;
 	int controller_drift = 5;

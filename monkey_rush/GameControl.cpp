@@ -34,7 +34,6 @@ void GameControl::keyboardMovement()
 }
 
 GameControl::GameControl(sf::RenderWindow* window)
-	:enm(randomPosition(sf::Vector2f(0, 800)))
 {
 	this->window = window;
 	is_controller_connected = sf::Joystick::isConnected(0);
@@ -47,7 +46,7 @@ bool GameControl::setup()
 	sf::Vector2f window_size = static_cast<sf::Vector2f>(window->getSize());
 	sf::Vector2f middle = window_size / 2.f;
 	player.setPosition(middle);
-	enemies.emplace_back(std::make_unique<Enemy>(randomPosition(sf::Vector2f(0, 800))));
+	enemies.emplace_back(std::make_unique<Tank>(randomPosition(sf::Vector2f(0, 800))));
 	return false;
 }
 
@@ -79,16 +78,15 @@ void GameControl::actions()
 		s->moveToPlayer(player,frame_time);
 		
 	}
-	enm.moveToPlayer(player, frame_time);
 }
 
 void GameControl::draw(sf::RenderWindow& _window)
 {
 	window->clear();
 	for (const auto& s : enemies) {
-		window->draw(*s);
+		s->animate(frame_time);
+		s->draw(&_window);
 	}
-	window->draw(enm);
 	player.draw(&_window);
 	window->display();
 }
