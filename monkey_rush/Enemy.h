@@ -18,5 +18,6 @@ public:
     //virtual void atack();
     void move(sf::Vector2f& offset);
     void move(float x, float y);
+    void bounceOfEnemy(Enemy* other, sf::Time delta_time);
 };
 

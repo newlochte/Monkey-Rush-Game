@@ -41,3 +41,12 @@ void Enemy::move(float x, float y)
 
 	Entity::move(x, y);
 }
+
+void Enemy::bounceOfEnemy(Enemy* other, sf::Time delta_time)
+{
+	sf::Vector2f move_vector;
+	move_vector = unclipVector(*other);
+	move_vector /= sqrt(move_vector.x * move_vector.x + move_vector.y * move_vector.y);
+	move_vector *= delta_time.asSeconds();
+	move(move_vector);
+}

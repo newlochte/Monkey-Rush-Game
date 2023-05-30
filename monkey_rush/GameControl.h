@@ -10,14 +10,20 @@
 class GameControl
 {
 	sf::RenderWindow* window;
-	sf::Time game_timer;
+	sf::Clock game_timer;
 	sf::Time frame_time;
 	sf::Clock clock;
+	sf::Vector2f map_size = { 600,600 };
+	sf::View camera;
 
+	//kontenery na obiekty
 	Player player;
-
 	std::vector<std::unique_ptr<Enemy>> enemies;
 
+	//liczniki przeciwników i bonusów
+	int enemies_count;
+
+	//dane do sterowania
 	bool is_controller_connected;
 	int controller_drift = 5;
 	sf::Vector2f player_movement;
@@ -26,6 +32,7 @@ class GameControl
 
 	void controllerMovement();
 	void keyboardMovement();
+	void randomEnemySpawn();
 
 public:
 	//inicjalizacja zmiennych globalnych

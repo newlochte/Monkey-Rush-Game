@@ -33,11 +33,33 @@ void GameControl::keyboardMovement()
 	}
 }
 
+void GameControl::randomEnemySpawn()
+{
+	int type = 0;//randomInt(0, 2);
+	switch (type)
+	{
+	case 0:
+		enemies.emplace_back(std::make_unique<Tank>(randomPosition(map_size)));
+		break;
+	case 1:
+		//enemies.emplace_back(std::make_unique<Basic>(randomPosition(map_size)));
+		break;
+	case 2:
+		//enemies.emplace_back(std::make_unique<Range>(randomPosition(map_size)));
+		break;
+	default:
+		std::cout << "how did that happed?!\n";
+		break;
+	}
+}
+
 GameControl::GameControl(sf::RenderWindow* window)
+	:camera(static_cast<sf::Vector2f>(window->getSize())/2.f, static_cast<sf::Vector2f>(window->getSize()))
 {
 	this->window = window;
 	is_controller_connected = sf::Joystick::isConnected(0);
 	is_controller_connected ? std::cout << "controller connected\n" : std::cout << "controller not connected\n";
+	enemies_count = 0;
 	
 }
 
@@ -46,7 +68,7 @@ bool GameControl::setup()
 	sf::Vector2f window_size = static_cast<sf::Vector2f>(window->getSize());
 	sf::Vector2f middle = window_size / 2.f;
 	player.setPosition(middle);
-	enemies.emplace_back(std::make_unique<Tank>(randomPosition(sf::Vector2f(0, 800))));
+	enemies_count = 10;
 	return false;
 }
 
@@ -72,16 +94,24 @@ void GameControl::inputs()
 
 void GameControl::actions()
 {
+	while (enemies.size() <= enemies_count) {
+		randomEnemySpawn();
+	}
 	sf::Vector2f dm = player_movement * frame_time.asSeconds();
 	player.move(dm);
-	for (const auto& s : enemies) {
-		s->moveToPlayer(player,frame_time);
-		
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i].get()->moveToPlayer(player,frame_time);
+		for (int j = 0; j < i; j++) {
+			if (enemies[i].get()->isColliding(*enemies[j].get())) {
+				enemies[i].get()->bounceOfEnemy(enemies[j].get(),frame_time);
+			}
+		}
 	}
 }
 
 void GameControl::draw(sf::RenderWindow& _window)
 {
+
 	window->clear();
 	for (const auto& s : enemies) {
 		s->animate(frame_time);
