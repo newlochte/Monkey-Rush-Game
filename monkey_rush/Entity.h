@@ -7,7 +7,8 @@ class Entity: public sf::RectangleShape
 	
 protected:
 	Animation animation;
-
+	sf::Texture texture;
+	void unclipVector(sf::RectangleShape other);
 
 public:
 	Entity();
@@ -16,7 +17,7 @@ public:
 
 	Entity(sf::Texture& texture, sf::Vector2f size);
 
-	void draw();
+	//void draw();
 
 	bool isColliding(sf::RectangleShape check_for_collision);
 	void draw(sf::RenderTarget* target);
@@ -27,5 +28,6 @@ public:
 	void move(float x, float y);
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);
+	const sf::Vector2f getPosition();
 };
 

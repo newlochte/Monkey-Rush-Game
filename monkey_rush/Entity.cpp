@@ -1,17 +1,23 @@
 #include "Entity.h"
+#include<iostream>
+
+void Entity::unclipVector(sf::RectangleShape other)
+{
+
+}
 
 Entity::Entity()
 {
 }
 
 Entity::Entity(sf::Vector2f size)
-	:animation(size)
+	:animation(size), RectangleShape(size)
 {
 
 }
 
 Entity::Entity(sf::Texture& texture, sf::Vector2f size)
-	:animation(size, texture)
+	:animation(size, texture), RectangleShape(size)
 {
 
 }
@@ -36,18 +42,25 @@ bool Entity::isColliding(sf::RectangleShape check_for_collision)
 void Entity::draw(sf::RenderTarget* target)
 {
 	target->draw(animation);
-	target->draw(*this);
 }
 
 void Entity::setPosition(const sf::Vector2f& position)
 {
-	RectangleShape::setPosition(position);
-	animation.setPosition(position);
+	RectangleShape::setPosition(position - (getSize() / 2.f));
+	animation.setPosition(position - (getSize() / 2.f));
 }
 
 void Entity::setPosition(float x, float y)
 {
+	x -= getSize().x / 2.f;
+	y -= getSize().y / 2.f;
+
 	animation.setPosition(x, y);
 	RectangleShape::setPosition(x, y);
+}
+
+const sf::Vector2f Entity::getPosition()
+{
+	return sf::Vector2f(sf::RectangleShape::getPosition()-(getSize()/2.f));
 }
 
