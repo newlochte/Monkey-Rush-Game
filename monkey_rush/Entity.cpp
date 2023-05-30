@@ -2,17 +2,11 @@
 #include<iostream>
 
 
-const sf::Vector2f Entity::unclipVector(sf::RectangleShape other)
+const sf::Vector2f Entity::unclipVector(Entity other)
 {
 	sf::Vector2f change;
 	change = other.getPosition() - getPosition();
-	if (abs(change.x) >= abs(change.y)) {
-		change.x = 0;
-	}
-	else if(abs(change.x) < abs(change.y)) {
-		change.y = 0;
-	}
-	return sf::Vector2f(change.x,change.y);
+	return sf::Vector2f(-change.x,-change.y);
 }
 
 Entity::Entity()

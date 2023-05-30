@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
+#include<iostream>
 
 class Entity: public sf::RectangleShape
 {
@@ -9,7 +10,7 @@ protected:
 	Animation animation;
 	sf::Texture texture;
 
-	const sf::Vector2f unclipVector(sf::RectangleShape other);
+	const sf::Vector2f unclipVector(Entity other);
 
 public:
 	Entity();

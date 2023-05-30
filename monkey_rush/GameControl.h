@@ -4,6 +4,8 @@
 #include<random>
 
 #include"Player.h"
+#include"Enemy.h"
+#include"Tank.h"
 
 class GameControl
 {
@@ -14,7 +16,8 @@ class GameControl
 
 	Player player;
 
-	std::vector<sf::Texture> textures;
+	std::vector<std::unique_ptr<Enemy>> enemies;
+	Tank enm;
 
 	bool is_controller_connected;
 	int controller_drift = 5;
