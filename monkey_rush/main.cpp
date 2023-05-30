@@ -1,35 +1,35 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "Player.h"
+#include "GameControl.h"
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    bool state = 0;
+    GameControl gc(&window);
+
+    sf::Texture txtr;
+    txtr.loadFromFile("img\\sprite_0.png");
+    sf::Vector2f window_size = static_cast<sf::Vector2f>(window.getSize());
+    sf::Vector2f middle = window_size / 2.f;
+
+    sf::Clock clock;
+    sf::Time time;
+
+    Player p1(txtr,middle);
+    unsigned int buttonCount = sf::Joystick::getButtonCount(0);
+
+    gc.setup();
+
     while (window.isOpen())
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        gc.inputs();
 
-        sf::Vector2i pos = sf::Mouse::getPosition(window);
-
-        if (shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(pos))&& !state) {
-            std::cout << "inside\n";
-            state = 1;
-        }
-        if (!shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(pos)) && state) {
-            std::cout << "out\n";
-            state = 0;
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
+        gc.actions();
+        
+        gc.draw(window);
+        
     }
 
     return 0;

@@ -4,14 +4,16 @@
 class Player :
     public Entity
 {
-    std::pair<float, float> velocity;
+    float velocity;
 
 public:
+    Player();
+
     Player(sf::Texture& entity_texture, sf::Vector2f middle_position);
     
-    
+    void move(sf::Vector2f& offset);
+    void move(float x, float y);
 
     
     
 };
-

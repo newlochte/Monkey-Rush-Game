@@ -1,5 +1,15 @@
 #include "Entity.h"
 
+Entity::Entity()
+{
+}
+
+Entity::Entity(sf::Vector2f size)
+	:animation(size)
+{
+
+}
+
 Entity::Entity(sf::Texture& texture, sf::Vector2f size)
 	:animation(size, texture)
 {
@@ -23,10 +33,10 @@ bool Entity::isColliding(sf::RectangleShape check_for_collision)
 	return getGlobalBounds().intersects(check_for_collision.getGlobalBounds());
 }
 
-void Entity::draw(sf::RenderTarget &target)
+void Entity::draw(sf::RenderTarget* target)
 {
-	target.draw(animation);
-	target.draw(*this);
+	target->draw(animation);
+	target->draw(*this);
 }
 
 void Entity::setPosition(const sf::Vector2f& position)

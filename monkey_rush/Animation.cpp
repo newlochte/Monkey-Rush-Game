@@ -15,6 +15,7 @@ bool Animation::animationChange(sf::Time time)
 Animation::Animation()
 {
 	frame_size = { 0,0 };
+	
 }
 
 Animation::Animation(sf::Vector2f size)
