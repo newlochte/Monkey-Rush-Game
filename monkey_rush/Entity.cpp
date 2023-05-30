@@ -64,7 +64,7 @@ void Entity::setPosition(float x, float y)
 
 const sf::Vector2f Entity::getPosition()
 {
-	return sf::Vector2f(sf::RectangleShape::getPosition()-(getSize()/2.f));
+	return sf::Vector2f(sf::RectangleShape::getPosition()+(getSize()/2.f));
 }
 
 void Entity::animate(sf::Time time)

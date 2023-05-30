@@ -111,7 +111,8 @@ void GameControl::actions()
 
 void GameControl::draw(sf::RenderWindow& _window)
 {
-
+	camera.setCenter(player.getPosition());
+	_window.setView(camera);
 	window->clear();
 	for (const auto& s : enemies) {
 		s->animate(frame_time);
