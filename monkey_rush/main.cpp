@@ -17,9 +17,6 @@ int main()
     sf::Clock clock;
     sf::Time time;
 
-    Player p1(txtr,middle);
-    unsigned int buttonCount = sf::Joystick::getButtonCount(0);
-
     gc.setup();
 
     while (window.isOpen())

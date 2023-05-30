@@ -1,6 +1,7 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 #include<vector>
+#include<random>
 
 #include"Player.h"
 
@@ -19,15 +20,7 @@ class GameControl
 	int controller_drift = 5;
 	sf::Vector2f player_movement;
 
-	/*enum entity_types {
-		player, basic, tank, range
-	};
-	std::map<int, std::string> texture_path = {
-		{0, "player.png"},
-		{1, "monke.png"},
-		{2, "tank.png"},
-		{3, "nosacz.png"}
-	};*/
+	//funkcjie prywatne, dla bardziej czytlenego kodu
 
 	void controllerMovement();
 	void keyboardMovement();
@@ -47,5 +40,9 @@ public:
 	void actions();
 	//rysowanie mówi samo z siebie
 	void draw(sf::RenderWindow& _window);
+
+	static sf::Vector2f randomPosition(sf::Vector2f map_size);
+	static int randomInt(int min, int max);
+	
 };
 

@@ -42,17 +42,10 @@ GameControl::GameControl(sf::RenderWindow* window)
 }
 
 bool GameControl::setup()
-{
-	textures.emplace_back(sf::Texture());
-	textures[0].loadFromFile("img\\sprite_0.png");
-	/*for (int i = 0; i < texture_path.size(); i++) {
-		textures.emplace_back(sf::Texture());
-		textures.back().loadFromFile(texture_path[i]);
-	}*/
+{	
 	sf::Vector2f window_size = static_cast<sf::Vector2f>(window->getSize());
 	sf::Vector2f middle = window_size / 2.f;
 	player.setPosition(middle);
-	player.setTexture(&textures[0]);
 	return false;
 }
 
@@ -87,4 +80,19 @@ void GameControl::draw(sf::RenderWindow& _window)
 	window->clear();
 	player.draw(&_window);
 	window->display();
+}
+
+sf::Vector2f GameControl::randomPosition(sf::Vector2f map_size)
+{
+	float x = (float)randomInt(0, (int)map_size.x);
+	float y = (float)randomInt(0, (int)map_size.y);
+	
+	return sf::Vector2f(x,y);
+}
+
+int GameControl::randomInt(int min, int max)
+{
+	static std::default_random_engine e{ static_cast<long unsigned int>(time(0)) };
+	std::uniform_int_distribution<int> d{ min, max };
+	return d(e);
 }
