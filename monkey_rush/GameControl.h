@@ -6,6 +6,8 @@
 #include"Player.h"
 #include"Enemy.h"
 #include"Tank.h"
+#include"Basic.h"
+#include"Range.h"
 
 class GameControl
 {

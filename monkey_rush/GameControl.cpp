@@ -35,17 +35,17 @@ void GameControl::keyboardMovement()
 
 void GameControl::randomEnemySpawn()
 {
-	int type = 0;//randomInt(0, 2);
+	int type = randomInt(0, 2);
 	switch (type)
 	{
 	case 0:
 		enemies.emplace_back(std::make_unique<Tank>(randomPosition(map_size)));
 		break;
 	case 1:
-		//enemies.emplace_back(std::make_unique<Basic>(randomPosition(map_size)));
+		enemies.emplace_back(std::make_unique<Basic>(randomPosition(map_size)));
 		break;
 	case 2:
-		//enemies.emplace_back(std::make_unique<Range>(randomPosition(map_size)));
+		enemies.emplace_back(std::make_unique<Range>(randomPosition(map_size)));
 		break;
 	default:
 		std::cout << "how did that happed?!\n";

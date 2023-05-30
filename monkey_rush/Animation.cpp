@@ -27,8 +27,9 @@ Animation::Animation(sf::Vector2f size)
 Animation::Animation(sf::Vector2f size, sf::Texture &texture)
 	:sf::RectangleShape(size)
 {
-	setTexture(&texture);
+	RectangleShape::setTexture(&texture);
 	Animation::texture_size = static_cast<sf::Vector2f>(texture.getSize());
+	//uvRect = { 0,0,(int)texture_size.x, (int)texture_size.y };
 }
 
 void Animation::animate(sf::Time time)
@@ -38,10 +39,17 @@ void Animation::animate(sf::Time time)
 			uvRect.left = 0;
 		}
 		else {
-			uvRect.left += texture_size.x;
+			uvRect.left += (int)texture_size.x;
 		}
 	}
 }
+
+//void Animation::setTexture(sf::Texture& texture)
+//{
+//	setTexture(texture);
+//	Animation::texture_size = static_cast<sf::Vector2f>(texture.getSize());
+//	uvRect = { 0,0,(int)texture_size.x, (int)texture_size.y };
+//}
 
 void Animation::setAnimationSpeed(float animation_speed_per_second)
 {
