@@ -8,7 +8,8 @@ class Entity: public sf::RectangleShape
 protected:
 	Animation animation;
 	sf::Texture texture;
-	void unclipVector(sf::RectangleShape other);
+
+	const sf::Vector2f unclipVector(sf::RectangleShape other);
 
 public:
 	Entity();

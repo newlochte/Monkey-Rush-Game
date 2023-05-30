@@ -5,7 +5,7 @@ class Player :
     public Entity
 {
     float velocity;
-
+    void setTexture();
 public:
     Player();
 
