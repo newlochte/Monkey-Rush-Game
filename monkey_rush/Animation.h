@@ -29,7 +29,7 @@ public:
 
 	void animate(sf::Time time);
 
-	//void setTexture(sf::Texture& texture);
+	void setTexture(sf::Texture *texture);
 
 	//void setAnimationType();
 

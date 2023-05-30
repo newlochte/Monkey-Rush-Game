@@ -35,21 +35,22 @@ Animation::Animation(sf::Vector2f size, sf::Texture &texture)
 void Animation::animate(sf::Time time)
 {
 	if (animationChange(time)) {
+		std::cout<<uvRect.top<<", " << uvRect.left << ", " << uvRect.width << ", " << uvRect.height << "\n ";
 		if (uvRect.left+uvRect.width >= texture_size.x) {
 			uvRect.left = 0;
 		}
 		else {
-			uvRect.left += (int)texture_size.x;
+			uvRect.left += (int)frame_size.x;
 		}
+		setTextureRect(uvRect);
 	}
 }
 
-//void Animation::setTexture(sf::Texture& texture)
-//{
-//	setTexture(texture);
-//	Animation::texture_size = static_cast<sf::Vector2f>(texture.getSize());
-//	uvRect = { 0,0,(int)texture_size.x, (int)texture_size.y };
-//}
+void Animation::setTexture(sf::Texture* texture)
+{
+	RectangleShape::setTexture(texture);
+	Animation::texture_size = static_cast<sf::Vector2f>(texture->getSize());
+}
 
 void Animation::setAnimationSpeed(float animation_speed_per_second)
 {
@@ -59,4 +60,5 @@ void Animation::setAnimationSpeed(float animation_speed_per_second)
 void Animation::setFrameSize(sf::Vector2f frame_size)
 {
 	Animation::frame_size = frame_size;
+	uvRect = { 0,0,(int)frame_size.x,(int)frame_size.y };
 }
