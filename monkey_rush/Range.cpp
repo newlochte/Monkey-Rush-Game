@@ -6,7 +6,7 @@ Range::Range(sf::Vector2f position)
 	Enemy::setTexture(path);
 	animation.setAnimationSpeed(4);
 	animation.setFrameSize(sf::Vector2f(64, 64));
-	distance_to_player = 400.f;
+	//distance_to_player = 400.f;
 }
 
 void Range::moveToPlayer(Player player, sf::Time delta_time)
@@ -22,6 +22,26 @@ void Range::moveToPlayer(Player player, sf::Time delta_time)
 		move_vector /= sqrt(move_vector.x * move_vector.x + move_vector.y * move_vector.y);
 		move_vector *= delta_time.asSeconds();
 	}
-	else move_vector = { 0,0 };
+	else {
+		move_vector = { 0,0 };
+	}
 	move(move_vector);
+}
+
+int Range::getAtackType()
+{
+	//std::cout << "range atack\n";
+	return 3;
+}
+
+bool Range::canAtack(Player player, sf::Time delta_time)
+{
+	bool state = false;
+	if (atack_timer > 0.0) atack_timer -= delta_time.asSeconds();
+	if (vectorLenght(player.getPosition() - getPosition()) < distance_to_player && atack_timer <= 0.0) {
+		state = true;
+		atack_timer = atack_cooldown;
+	}
+
+	return state;
 }

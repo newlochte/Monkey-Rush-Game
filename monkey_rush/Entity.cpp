@@ -13,19 +13,18 @@ Entity::Entity()
 {
 }
 
+Entity::Entity(sf::Vector2f hitbox_size, sf::Vector2f animation_size)
+	:animation(animation_size), RectangleShape(hitbox_size)
+{
+
+}
+
 Entity::Entity(sf::Vector2f size)
 	:animation(size), RectangleShape(size)
 {
-
 }
 
-Entity::Entity(sf::Texture& texture, sf::Vector2f size)
-	:animation(size, texture), RectangleShape(size)
-{
-
-}
-
-void Entity::move(sf::Vector2f& offset)
+void Entity::move(sf::Vector2f offset)
 {
 	animation.move(offset);
 	RectangleShape::move(offset);

@@ -15,9 +15,8 @@ protected:
 public:
 	Entity();
 
+	Entity(sf::Vector2f hitbox_size, sf::Vector2f animation_size);
 	Entity(sf::Vector2f size);
-
-	Entity(sf::Texture& texture, sf::Vector2f size);
 
 	//void draw();
 
@@ -26,7 +25,7 @@ public:
 	//virtual int atack();
 
 	//przeci¹¿enia metod z klasy RectangleShape, bo animacjê te¿ trzeba ruszaæ kiedy postaæ
-	void move(sf::Vector2f &offset);
+	void move(sf::Vector2f offset);
 	void move(float x, float y);
 	void setPosition(const sf::Vector2f& position);
 	void setPosition(float x, float y);

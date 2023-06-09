@@ -17,6 +17,7 @@ Enemy::Enemy(sf::Vector2f position)
 	velocity = 100;
 	setPosition(position);
 	setTexture();
+	atack_timer = 0.0;
 }
 
 void Enemy::moveToPlayer(Player player, sf::Time delta_time)
@@ -31,6 +32,23 @@ void Enemy::moveToPlayer(Player player, sf::Time delta_time)
 	move_vector /= sqrt(move_vector.x * move_vector.x + move_vector.y * move_vector.y);
 	move_vector *= delta_time.asSeconds();
 	move(move_vector);
+}
+
+int Enemy::getAtackType()
+{
+	return 4;
+}
+
+bool Enemy::canAtack(Player player, sf::Time time_elapsed)
+{
+	bool state = false;
+	if(atack_timer > 0.0) atack_timer -= time_elapsed.asSeconds();
+	if (vectorLenght(player.getPosition() - getPosition()) < 50 && atack_timer <= 0.0) {
+		state = true;
+		atack_timer = atack_cooldown;
+	}
+
+	return state;
 }
 
 void Enemy::move(sf::Vector2f& offset)
@@ -55,3 +73,5 @@ void Enemy::bounceOfEnemy(Enemy* other, sf::Time delta_time)
 	move_vector *= delta_time.asSeconds();
 	move(move_vector);
 }
+
+

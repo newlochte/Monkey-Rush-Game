@@ -4,13 +4,11 @@
 class Player :
     public Entity
 {
-    float velocity;
+    float velocity = 300;
     void setTexture();
     std::string path = "img\\Explorer_animation.png";
 public:
     Player();
-
-    Player(sf::Texture& entity_texture, sf::Vector2f middle_position);
     
     void move(sf::Vector2f offset);
     void move(float x, float y);

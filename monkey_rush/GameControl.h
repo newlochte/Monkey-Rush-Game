@@ -9,6 +9,7 @@
 #include"Basic.h"
 #include"Range.h"
 #include"Map.h"
+#include"Missile.h"
 
 class GameControl
 {
@@ -19,11 +20,13 @@ class GameControl
 	sf::View camera;
 
 	//mapa
-	sf::Vector2f map_size = { 2500,1200 };
+	sf::Vector2f map_size = { 700,600 };
 	Map map;
 	//kontenery na obiekty
 	Player player;
 	std::vector<std::unique_ptr<Enemy>> enemies;
+	std::vector<std::unique_ptr<Missile>> enemy_missiles;
+
 
 	//liczniki przeciwników i bonusów
 	int enemies_count;
@@ -38,6 +41,7 @@ class GameControl
 	sf::Vector2f controllerMovement();
 	sf::Vector2f keyboardMovement();
 	void randomEnemySpawn();
+	void printV(sf::Vector2f v);
 
 public:
 	//inicjalizacja zmiennych globalnych

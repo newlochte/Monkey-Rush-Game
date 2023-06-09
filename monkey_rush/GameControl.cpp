@@ -60,9 +60,15 @@ void GameControl::randomEnemySpawn()
 	}
 }
 
+void GameControl::printV(sf::Vector2f v)
+{
+	std::cout << v.x << " " << v.y << std::endl;
+}
+
 GameControl::GameControl(sf::RenderWindow* window)
-	:camera(static_cast<sf::Vector2f>(window->getSize())/2.f, static_cast<sf::Vector2f>(window->getSize())),
-	 map(map_size)
+	:camera(static_cast<sf::Vector2f>(window->getSize()) / 2.f, static_cast<sf::Vector2f>(window->getSize())),
+	map(map_size)
+	
 {
 	this->window = window;
 	is_controller_connected = sf::Joystick::isConnected(0);
@@ -75,7 +81,7 @@ bool GameControl::setup()
 	sf::Vector2f window_size = static_cast<sf::Vector2f>(window->getSize());
 	sf::Vector2f middle = window_size / 2.f;
 	player.setPosition(middle);
-	enemies_count = 10;
+	enemies_count = 15;
 	return false;
 }
 
@@ -114,15 +120,35 @@ void GameControl::inputs()
 
 void GameControl::actions()
 {
-	while (enemies.size() <= enemies_count) {
+	while (enemies.size() < enemies_count) {
+		//spawn przeciwników
 		randomEnemySpawn();
 	}
 	for (int i = 0; i < enemies.size(); i++) {
-		enemies[i].get()->moveToPlayer(player,frame_time);
+		enemies[i].get()->moveToPlayer(player, frame_time);
+		if (enemies[i].get()->canAtack(player, frame_time)) {
+			enemy_missiles.emplace_back(
+				std::make_unique<Missile>(
+					enemies[i].get()->RectangleShape::getPosition(), 
+					player.getPosition(), 
+					(Missile::type)enemies[i].get()->getAtackType()
+				)
+			);
+		}
 		for (int j = 0; j < i; j++) {
 			if (enemies[i].get()->isColliding(*enemies[j].get())) {
 				enemies[i].get()->bounceOfEnemy(enemies[j].get(),frame_time);
 			}
+		}
+	}
+	for (auto it = enemy_missiles.begin(); it != enemy_missiles.end();) {
+		(*it)->update(frame_time);
+		if ((*it)->expired() ) { //&& (*it)->isColliding(player)
+			//(*it)->getDamageInfo();
+			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(),enemy_missiles.end(),(*it)));
+		}
+		else {
+			it++;
 		}
 	}
 }
@@ -133,12 +159,19 @@ void GameControl::draw(sf::RenderWindow& _window)
 	_window.setView(camera);
 	window->clear();
 	map.draw(&_window);
-	for (const auto& s : enemies) {
-		s->animate(frame_time);
-		s->draw(&_window);
+	for (const auto& enemy : enemies) {
+		enemy->animate(frame_time);
+		enemy->draw(&_window);
 	}
 	player.animate(frame_time);
 	player.draw(&_window);
+	//debug
+	std::cout << enemy_missiles.size() << std::endl;
+	for (const auto& missile : enemy_missiles) {
+		missile->animate(frame_time);
+		missile->draw(&_window);
+		//printV(missile->getPosition());
+	}
 	window->display();
 }
 
