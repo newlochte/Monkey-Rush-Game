@@ -6,6 +6,11 @@ void Enemy::setTexture(std::string path = "img\\default.png")
 	animation.setTexture(&texture);
 }
 
+float Enemy::vectorLenght(sf::Vector2f v)
+{
+	return sqrt(v.x * v.x + v.y * v.y);
+}
+
 Enemy::Enemy(sf::Vector2f position)
 	:Entity(sf::Vector2f(64,64))
 {
