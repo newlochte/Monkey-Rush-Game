@@ -6,6 +6,7 @@ class Player :
 {
     float velocity;
     void setTexture();
+    std::string path = "img\\Explorer_animation.png";
 public:
     Player();
 

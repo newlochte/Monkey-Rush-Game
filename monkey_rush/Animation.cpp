@@ -61,4 +61,5 @@ void Animation::setFrameSize(sf::Vector2f frame_size)
 {
 	Animation::frame_size = frame_size;
 	uvRect = { 0,0,(int)frame_size.x,(int)frame_size.y };
+	setTextureRect(uvRect);
 }

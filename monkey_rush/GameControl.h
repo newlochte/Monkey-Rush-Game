@@ -8,6 +8,7 @@
 #include"Tank.h"
 #include"Basic.h"
 #include"Range.h"
+#include"Map.h"
 
 class GameControl
 {
@@ -15,9 +16,11 @@ class GameControl
 	sf::Clock game_timer;
 	sf::Time frame_time;
 	sf::Clock clock;
-	sf::Vector2f map_size = { 600,600 };
 	sf::View camera;
 
+	//mapa
+	sf::Vector2f map_size = { 2500,1200 };
+	Map map;
 	//kontenery na obiekty
 	Player player;
 	std::vector<std::unique_ptr<Enemy>> enemies;

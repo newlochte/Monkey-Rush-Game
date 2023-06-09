@@ -27,7 +27,7 @@ public:
 		idle = 0, move_right = 1, move_left = -1, atack = 2
 	};
 
-	type animation_type;
+	type animation_type = idle;
 	
 	Animation();
 

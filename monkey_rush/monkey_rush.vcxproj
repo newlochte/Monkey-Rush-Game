@@ -152,6 +152,7 @@
     <ClCompile Include="GameControl.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Range.cpp" />
     <ClCompile Include="Tank.cpp" />
@@ -163,7 +164,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="Interface.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="Tank.h" />

@@ -2,8 +2,9 @@
 
 void Player::setTexture()
 {
-	texture.loadFromFile("img\\sprite_0.png");
+	texture.loadFromFile(path);
 	animation.setTexture(&texture);
+	
 }
 
 Player::Player()
@@ -11,6 +12,8 @@ Player::Player()
 {
 	setTexture();
 	velocity = 300;
+	animation.setAnimationSpeed(4);
+	animation.setFrameSize(sf::Vector2f(64, 64));
 }
 
 Player::Player(sf::Texture& entity_texture, sf::Vector2f middle_position)

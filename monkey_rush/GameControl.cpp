@@ -61,13 +61,13 @@ void GameControl::randomEnemySpawn()
 }
 
 GameControl::GameControl(sf::RenderWindow* window)
-	:camera(static_cast<sf::Vector2f>(window->getSize())/2.f, static_cast<sf::Vector2f>(window->getSize()))
+	:camera(static_cast<sf::Vector2f>(window->getSize())/2.f, static_cast<sf::Vector2f>(window->getSize())),
+	 map(map_size)
 {
 	this->window = window;
 	is_controller_connected = sf::Joystick::isConnected(0);
 	is_controller_connected ? std::cout << "controller connected\n" : std::cout << "controller not connected\n";
 	enemies_count = 0;
-	
 }
 
 bool GameControl::setup()
@@ -97,6 +97,18 @@ void GameControl::inputs()
 		//movement with keyboard
 		movement_vector = keyboardMovement();
 	}
+	if (player.getPosition().x + movement_vector.x > map_size.x) {
+		movement_vector.x = 0;
+	}
+	if (player.getPosition().x + movement_vector.x < 0 ) {
+		movement_vector.x = 0;
+	}
+	if (player.getPosition().y + movement_vector.y > map_size.y) {
+		movement_vector.y = 0;
+	}
+	if (player.getPosition().y + movement_vector.y < 0) {
+		movement_vector.y = 0;
+	}
 	player.playerMovement(movement_vector,frame_time);
 }
 
@@ -120,10 +132,12 @@ void GameControl::draw(sf::RenderWindow& _window)
 	camera.setCenter(player.getPosition());
 	_window.setView(camera);
 	window->clear();
+	map.draw(&_window);
 	for (const auto& s : enemies) {
 		s->animate(frame_time);
 		s->draw(&_window);
 	}
+	player.animate(frame_time);
 	player.draw(&_window);
 	window->display();
 }

@@ -3,10 +3,10 @@
 Range::Range(sf::Vector2f position)
 	:Enemy(position)
 {
-	Enemy::setTexture("img\\Nosacz_animacja.png");
+	Enemy::setTexture(path);
 	animation.setAnimationSpeed(4);
 	animation.setFrameSize(sf::Vector2f(64, 64));
-	distance_to_player = 800.f;
+	distance_to_player = 400.f;
 }
 
 void Range::moveToPlayer(Player player, sf::Time delta_time)
