@@ -26,22 +26,22 @@ class GameControl
 	int enemies_count;
 
 	//dane do sterowania
+	bool play_with_controller = 1;
 	bool is_controller_connected;
 	int controller_drift = 5;
-	sf::Vector2f player_movement;
 
 	//funkcjie prywatne, dla bardziej czytlenego kodu
 
-	void controllerMovement();
-	void keyboardMovement();
+	sf::Vector2f controllerMovement();
+	sf::Vector2f keyboardMovement();
 	void randomEnemySpawn();
 
 public:
 	//inicjalizacja zmiennych globalnych
 	GameControl(sf::RenderWindow* window);
 
-	void pause();
-	void menu();
+	/*void pause();
+	void menu();*/
 
 	// inicjalizacja wszystkich zmiennych potrzebnych do ropoczêcia gry import potrzebnych tekstur
 	bool setup(); 

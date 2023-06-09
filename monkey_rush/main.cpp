@@ -7,17 +7,18 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-    GameControl gc(&window);
+    GameControl game(&window);
 
-    gc.setup();
+    //mo¿e byæ nie potrzebne
+    game.setup();
 
     while (window.isOpen())
     {
-        gc.inputs();
+        game.inputs();
 
-        gc.actions();
+        game.actions();
         
-        gc.draw(window);
+        game.draw(window);
         
     }
 

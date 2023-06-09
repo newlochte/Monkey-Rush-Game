@@ -19,8 +19,16 @@ class Animation: public sf::RectangleShape
 	sf::Time animation_timer;
 
 	bool animationChange(sf::Time time);
+	
 
 public:
+
+	enum type {
+		idle = 0, move_right = 1, move_left = -1, atack = 2
+	};
+
+	type animation_type;
+	
 	Animation();
 
 	Animation(sf::Vector2f size);

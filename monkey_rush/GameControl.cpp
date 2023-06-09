@@ -1,36 +1,43 @@
 #include "GameControl.h"
 #include <iostream>
 
-void GameControl::controllerMovement()
+sf::Vector2f GameControl::controllerMovement()
 {
 	float x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 	float y = sf::Joystick::getAxisPosition(0, sf::Joystick::Y);
 
-	player_movement = { 0,0 };
-
 	if (abs(x) > controller_drift) {
-		player_movement = { x / 100,0 };
+		x /= 100;
+	}
+	else {
+		x = 0;
 	}
 	if (abs(y) > controller_drift) {
-		player_movement += { 0, y / 100 };
+		y /= 100;
 	}
+	else {
+		y = 0;
+	}
+	return sf::Vector2f(x, y);
 }
 
-void GameControl::keyboardMovement()
+sf::Vector2f GameControl::keyboardMovement()
 {
-	player_movement = { 0,0 };
+	float x = 0;
+	float y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		player_movement += { 0,-1 };
+		x -= 0;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		player_movement += { 0,1 };
+		x += 0;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		player_movement += { 1,0 };
+		y += 1;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		player_movement += { -1,0 };
+		y -= 1;
 	}
+	return sf::Vector2f(x, y);
 }
 
 void GameControl::randomEnemySpawn()
@@ -82,14 +89,15 @@ void GameControl::inputs()
 			window->close();
 		//zmiany stanu gry pausa etc.
 	}
-
-	if (is_controller_connected) {
-		controllerMovement();
+	sf::Vector2f movement_vector;
+	if (is_controller_connected && play_with_controller) {
+		movement_vector = controllerMovement();
 	}
 	else {
 		//movement with keyboard
-		keyboardMovement();
+		movement_vector = keyboardMovement();
 	}
+	player.playerMovement(movement_vector,frame_time);
 }
 
 void GameControl::actions()
@@ -97,8 +105,6 @@ void GameControl::actions()
 	while (enemies.size() <= enemies_count) {
 		randomEnemySpawn();
 	}
-	sf::Vector2f dm = player_movement * frame_time.asSeconds();
-	player.move(dm);
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i].get()->moveToPlayer(player,frame_time);
 		for (int j = 0; j < i; j++) {

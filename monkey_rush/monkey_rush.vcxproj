@@ -163,6 +163,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="Tank.h" />

@@ -35,7 +35,7 @@ Animation::Animation(sf::Vector2f size, sf::Texture &texture)
 void Animation::animate(sf::Time time)
 {
 	if (animationChange(time)) {
-		std::cout<<uvRect.top<<", " << uvRect.left << ", " << uvRect.width << ", " << uvRect.height << "\n ";
+		//std::cout<<uvRect.top<<", " << uvRect.left << ", " << uvRect.width << ", " << uvRect.height << "\n ";
 		if (uvRect.left+uvRect.width >= texture_size.x) {
 			uvRect.left = 0;
 		}
