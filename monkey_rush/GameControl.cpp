@@ -26,16 +26,16 @@ sf::Vector2f GameControl::keyboardMovement()
 	float x = 0;
 	float y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		x -= 0;
+		y -= 1;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		x += 0;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		y += 1;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		x += 1;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		y -= 1;
+		x -= 1;
 	}
 	return sf::Vector2f(x, y);
 }
