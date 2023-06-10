@@ -3,7 +3,7 @@
 class Tank :
     public Enemy
 {
-    std::string path = "img\\Tank.png";
+    std::string path = "img\\Tank_animation.png";
 public:
     Tank(sf::Vector2f position);
 };

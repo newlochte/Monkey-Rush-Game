@@ -14,7 +14,14 @@ float Enemy::vectorLenght(sf::Vector2f v)
 Enemy::Enemy(sf::Vector2f position)
 	:Entity(sf::Vector2f(64,64))
 {
-	velocity;
+	setPosition(position);
+	setTexture();
+	atack_timer = 0.0;
+}
+
+Enemy::Enemy(sf::Vector2f position, sf::Vector2f size)
+	:Entity(size)
+{
 	setPosition(position);
 	setTexture();
 	atack_timer = 0.0;

@@ -15,6 +15,8 @@ protected:
     void setTexture(std::string path);
 public:
     Enemy(sf::Vector2f position);
+    Enemy(sf::Vector2f position, sf::Vector2f size);
+
 
     virtual void moveToPlayer(Player player, sf::Time delta_time);
     virtual int getAtackType();
