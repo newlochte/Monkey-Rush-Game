@@ -65,15 +65,36 @@ void GameControl::printV(sf::Vector2f v)
 	std::cout << v.x << " " << v.y << std::endl;
 }
 
+void GameControl::playerAtack()
+{
+	if (player.atackCooldown(frame_time)) {
+		sf::Vector2f mouse_pos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+		player_missiles.emplace_back(std::make_unique<Missile>(
+			player.getPosition(), 
+			mouse_pos,
+			(Missile::type)player.getAtack()));
+	}	
+}
+
 GameControl::GameControl(sf::RenderWindow* window)
 	:camera(static_cast<sf::Vector2f>(window->getSize()) / 2.f, static_cast<sf::Vector2f>(window->getSize())),
 	map(map_size)
 	
 {
+	//piêkny celownik
+	sf::Image target;
+	target.loadFromFile("img\\Target.png");
+	sf::Vector2u hotspot = {10,10};
+	cursor.loadFromPixels(target.getPixelsPtr(),target.getSize(),hotspot);
+	window->setMouseCursor(cursor);
+
+	//zmienne klasy
 	this->window = window;
+	enemies_count = 0;
+
+	//controller check, czasem sprawia ¿e d³ugo siê w³¹cza gra
 	is_controller_connected = sf::Joystick::isConnected(0);
 	is_controller_connected ? std::cout << "controller connected\n" : std::cout << "controller not connected\n";
-	enemies_count = 0;
 }
 
 bool GameControl::setup()
@@ -98,6 +119,10 @@ void GameControl::inputs()
 		}
 		//zmiany stanu gry pausa etc.
 	}
+	
+	//strzelanie
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) || sf::Joystick::isButtonPressed(0, 7)) playerAtack();
+
 	sf::Vector2f movement_vector;
 	if (is_controller_connected && play_with_controller) {
 		movement_vector = controllerMovement();
@@ -106,6 +131,7 @@ void GameControl::inputs()
 		//movement with keyboard
 		movement_vector = keyboardMovement();
 	}
+	//kolizja z krañcem mapy (do poprawy)
 	if (player.getPosition().x + movement_vector.x > map_size.x) {
 		movement_vector.x = 0;
 	}
@@ -118,6 +144,7 @@ void GameControl::inputs()
 	if (player.getPosition().y + movement_vector.y < 0) {
 		movement_vector.y = 0;
 	}
+
 	player.playerMovement(movement_vector,frame_time);
 }
 
@@ -147,10 +174,10 @@ void GameControl::actions()
 			}
 		}
 	}
+	//ataki przeciwników
 	for (auto it = enemy_missiles.begin(); it != enemy_missiles.end();) {
 		(*it)->update(frame_time);
 		if ((*it)->expired() ) { 
-			
 			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(),enemy_missiles.end(),(*it)));
 		}
 		else if ((*it)->isColliding(player)) {
@@ -160,6 +187,44 @@ void GameControl::actions()
 		}
 		else {
 			it++;
+		}
+	}
+	//ataki gracza (syf totalny przyda³by siê redesign metod to obs³ugi tego)
+	for (auto it = player_missiles.begin(); it != player_missiles.end();) {
+		(*it)->update(frame_time);
+		bool to_delete = false;
+		float radius = (*it)->getDamageInfo().second;
+		if ((*it)->expired()) {
+			to_delete = true;
+			if (radius >= 1.1) {
+				for (auto enemy = enemies.begin(); enemy != enemies.end();) {
+					if ( (*enemy)->vectorLenght( (*it)->getPosition() ) <= radius ) {
+						if((*enemy)->doDamage((*it)->getDamageInfo().first))
+							enemy = enemies.erase(
+								std::remove(enemies.begin(), enemies.end(), (*enemy)));
+					}
+					else enemy++;
+				}
+			}
+		}
+		if (radius < 1.1) {
+			for (auto enemy = enemies.begin(); enemy != enemies.end();) {
+				if ((*it)->isColliding(*(*enemy)) && 
+					(*enemy)->doDamage((*it)->getDamageInfo().first)) {
+						enemy = enemies.erase(
+							std::remove(enemies.begin(), enemies.end(), (*enemy)) );
+						to_delete = true;
+				}
+				else enemy++;
+			}
+		}
+		
+		
+		if(!to_delete) {
+			it++;
+		}
+		else {
+			it = player_missiles.erase(std::remove(player_missiles.begin(), player_missiles.end(), (*it)));
 		}
 	}
 }
@@ -181,7 +246,10 @@ void GameControl::draw(sf::RenderWindow& _window)
 	for (const auto& missile : enemy_missiles) {
 		missile->animate(frame_time);
 		missile->draw(&_window);
-		//printV(missile->getPosition());
+	}
+	for (const auto& missile : player_missiles) {
+		missile->animate(frame_time);
+		missile->draw(&_window);
 	}
 	window->display();
 }

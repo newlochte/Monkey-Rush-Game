@@ -20,8 +20,8 @@ Missile::Missile(sf::Vector2f position, sf::Vector2f destination, type amo)
 	//animacja
 	texture.loadFromFile(path);
 	animation.setTexture(&texture);
-	animation.setAnimationSpeed(4);
-	animation.setFrameSize(sf::Vector2f(10, 10));
+	animation.setAnimationSpeed(missile_info[amo].frame_rate);
+	animation.setFrameSize(missile_info[amo].hit_box);
 }
 
 void Missile::update(sf::Time time_elasped)

@@ -7,12 +7,12 @@ class Enemy :
 {
 
 protected:
+    int healt = 100;
     float velocity = 100;
     float atack_cooldown = 2.f;
     float atack_timer;
 
     void setTexture(std::string path);
-    float vectorLenght(sf::Vector2f v);
 public:
     Enemy(sf::Vector2f position);
 
@@ -25,6 +25,8 @@ public:
     void move(sf::Vector2f& offset);
     void move(float x, float y);
     void bounceOfEnemy(Enemy* other, sf::Time delta_time);
+    bool doDamage(int damage);
     
+    float vectorLenght(sf::Vector2f v);
 };
 

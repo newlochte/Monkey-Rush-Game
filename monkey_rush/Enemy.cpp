@@ -51,6 +51,12 @@ bool Enemy::canAtack(Player player, sf::Time time_elapsed)
 	return state;
 }
 
+bool Enemy::doDamage(int damage)
+{
+	healt -= damage;
+	return healt <= 0;
+}
+
 void Enemy::move(sf::Vector2f& offset)
 {
 	offset *= velocity;

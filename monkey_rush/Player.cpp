@@ -50,4 +50,17 @@ void Player::doDamage(int damage_done)
 	std::cout << health <<"\n";
 }
 
+bool Player::atackCooldown(sf::Time delta_time)
+{
+	if (atack_timer > 0.0) atack_timer -= delta_time.asSeconds();
+	if (atack_timer <= 0.0) return true;
+	return false;
+}
+
+int Player::getAtack()
+{
+	atack_timer = atack_cooldown;
+	return weapon;
+}
+
 

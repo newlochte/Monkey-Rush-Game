@@ -33,9 +33,10 @@ class GameControl
 	int enemies_count;
 
 	//dane do sterowania
-	bool play_with_controller = 1;
+	bool play_with_controller = false;
 	bool is_controller_connected;
 	int controller_drift = 5;
+	sf::Cursor cursor;
 
 	//funkcjie prywatne, dla bardziej czytlenego kodu
 
@@ -43,6 +44,7 @@ class GameControl
 	sf::Vector2f keyboardMovement();
 	void randomEnemySpawn();
 	void printV(sf::Vector2f v);
+	void playerAtack();
 
 public:
 	//inicjalizacja zmiennych globalnych
