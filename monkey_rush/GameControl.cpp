@@ -93,6 +93,9 @@ void GameControl::inputs()
 	{
 		if (event.type == sf::Event::Closed)
 			window->close();
+		if (event.type == sf::Event::KeyPressed) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window->close();
+		}
 		//zmiany stanu gry pausa etc.
 	}
 	sf::Vector2f movement_vector;
@@ -124,9 +127,12 @@ void GameControl::actions()
 		//spawn przeciwników
 		randomEnemySpawn();
 	}
+	//enemies movement
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i].get()->moveToPlayer(player, frame_time);
+		//atak przeciwników
 		if (enemies[i].get()->canAtack(player, frame_time)) {
+			//std::cout << "atakc sent\n";
 			enemy_missiles.emplace_back(
 				std::make_unique<Missile>(
 					enemies[i].get()->RectangleShape::getPosition(), 
@@ -143,9 +149,14 @@ void GameControl::actions()
 	}
 	for (auto it = enemy_missiles.begin(); it != enemy_missiles.end();) {
 		(*it)->update(frame_time);
-		if ((*it)->expired() ) { //&& (*it)->isColliding(player)
-			//(*it)->getDamageInfo();
+		if ((*it)->expired() ) { 
+			
 			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(),enemy_missiles.end(),(*it)));
+		}
+		else if ((*it)->isColliding(player)) {
+			(*it)->hit();
+			player.doDamage((*it)->getDamageInfo().first);
+			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(), enemy_missiles.end(), (*it)));
 		}
 		else {
 			it++;
@@ -166,7 +177,7 @@ void GameControl::draw(sf::RenderWindow& _window)
 	player.animate(frame_time);
 	player.draw(&_window);
 	//debug
-	std::cout << enemy_missiles.size() << std::endl;
+	//std::cout << enemy_missiles.size() << std::endl;
 	for (const auto& missile : enemy_missiles) {
 		missile->animate(frame_time);
 		missile->draw(&_window);

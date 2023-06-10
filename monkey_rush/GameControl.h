@@ -26,6 +26,7 @@ class GameControl
 	Player player;
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::vector<std::unique_ptr<Missile>> enemy_missiles;
+	std::vector<std::unique_ptr<Missile>> player_missiles;
 
 
 	//liczniki przeciwników i bonusów

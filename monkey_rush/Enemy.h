@@ -5,9 +5,9 @@
 class Enemy :
     public Entity
 {
-    float velocity;
 
 protected:
+    float velocity = 100;
     float atack_cooldown = 2.f;
     float atack_timer;
 

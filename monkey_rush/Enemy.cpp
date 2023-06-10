@@ -14,7 +14,7 @@ float Enemy::vectorLenght(sf::Vector2f v)
 Enemy::Enemy(sf::Vector2f position)
 	:Entity(sf::Vector2f(64,64))
 {
-	velocity = 100;
+	velocity;
 	setPosition(position);
 	setTexture();
 	atack_timer = 0.0;
@@ -43,7 +43,7 @@ bool Enemy::canAtack(Player player, sf::Time time_elapsed)
 {
 	bool state = false;
 	if(atack_timer > 0.0) atack_timer -= time_elapsed.asSeconds();
-	if (vectorLenght(player.getPosition() - getPosition()) < 50 && atack_timer <= 0.0) {
+	if (vectorLenght(player.getPosition() - getPosition()) < 66 && atack_timer <= 0.0) {
 		state = true;
 		atack_timer = atack_cooldown;
 	}

@@ -7,6 +7,8 @@ class Player :
     float velocity = 300;
     void setTexture();
     std::string path = "img\\Explorer_animation.png";
+
+    int health = 1000;
 public:
     Player();
     
@@ -14,7 +16,7 @@ public:
     void move(float x, float y);
 
     void playerMovement(sf::Vector2f movement_vector, sf::Time delta_time);
-
+    void doDamage(int damage_done);
     
     
 };

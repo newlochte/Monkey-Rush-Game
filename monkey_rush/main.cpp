@@ -19,7 +19,7 @@ int main()
         game.actions();
         
         game.draw(window);
-        
+
     }
 
     return 0;

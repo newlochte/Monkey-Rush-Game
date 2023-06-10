@@ -17,7 +17,7 @@ static Missile_info missile_info[5] = {
         {50,1,5,1000,{10.f,10.f},"mini.png"},
         {200,1,5,150,{10.f,6.f},"bazzooka.png"},
         {10,1,1.5,250,{10.f,10.f},"banana.png"},
-        {20,1,0.1,10,{1.f,1.f},"default.png"}
+        {20,1,0.5,300,{1.f,1.f},"default.png"}
 };
 
 class Missile :
@@ -25,7 +25,8 @@ class Missile :
 {
 public:
     enum type {
-        mini, ak, bomb, banana, mele
+        mini, ak, bomb, //bronie gracza
+        banana, mele    //ataki przeciwników
     };
 
     Missile(sf::Vector2f position, sf::Vector2f destination, type amo);

@@ -44,4 +44,10 @@ void Player::playerMovement(sf::Vector2f movement_vector, sf::Time delta_time)
 	move(movement_vector * delta_time.asSeconds());
 }
 
+void Player::doDamage(int damage_done)
+{
+	health -= damage_done;
+	std::cout << health <<"\n";
+}
+
 
