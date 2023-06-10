@@ -24,12 +24,16 @@ Animation::Animation(sf::Vector2f size)
 
 }
 
-Animation::Animation(sf::Vector2f size, sf::Texture &texture)
+Animation::Animation(sf::Vector2f size, sf::Texture &texture, bool one_frame)
 	:sf::RectangleShape(size)
 {
 	RectangleShape::setTexture(&texture);
 	Animation::texture_size = static_cast<sf::Vector2f>(texture.getSize());
-	//uvRect = { 0,0,(int)texture_size.x, (int)texture_size.y };
+	frame_size = size;
+	if (!one_frame) {
+		uvRect = { 0,0,(int)frame_size.x, (int)frame_size.y };
+		setTextureRect(uvRect);
+	}
 }
 
 void Animation::animate(sf::Time time)

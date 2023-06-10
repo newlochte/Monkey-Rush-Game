@@ -10,6 +10,7 @@
 #include"Range.h"
 #include"Map.h"
 #include"Missile.h"
+#include"Interface.h"
 
 class GameControl
 {
@@ -24,6 +25,7 @@ class GameControl
 	Map map;
 	//kontenery na obiekty
 	Player player;
+	Interface GUI;
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	std::vector<std::unique_ptr<Missile>> enemy_missiles;
 	std::vector<std::unique_ptr<Missile>> player_missiles;

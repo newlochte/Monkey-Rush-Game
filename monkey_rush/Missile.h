@@ -14,11 +14,11 @@ struct Missile_info
 };
 
 static Missile_info missile_info[5] = {
-        {1,1,5,10000,{10.f,10.f},"default.png",0},
-        {50,1,5,1000,{10.f,10.f},"default.png",0},
-        {200,150,5,150,{10.f,6.f},"default.png",0},
-        {10,1,1.5,250,{10.f,10.f},"banana.png",4},
-        {20,1,0.5,300,{1.f,1.f},"default.png",0}
+        {1  ,1  ,5  ,10000,{10.f,10.f},"default.png",0},
+        {50 ,1  ,5  ,1000 ,{10.f,10.f},"default.png",0},
+        {200,150,5  ,150  ,{10.f,6.f} ,"default.png",0},
+        {10 ,1  ,1.5,250  ,{10.f,10.f},"banana.png" ,4},
+        {20 ,1  ,0.5,300  ,{1.f,1.f}  ,"default.png",0}
 };
 
 class Missile :

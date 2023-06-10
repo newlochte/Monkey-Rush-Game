@@ -157,7 +157,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Range.cpp" />
     <ClCompile Include="Tank.cpp" />
-    <ClCompile Include="Target.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -171,7 +170,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="Tank.h" />
-    <ClInclude Include="Target.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

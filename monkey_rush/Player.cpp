@@ -47,7 +47,7 @@ void Player::playerMovement(sf::Vector2f movement_vector, sf::Time delta_time)
 void Player::doDamage(int damage_done)
 {
 	health -= damage_done;
-	std::cout << health <<"\n";
+	//std::cout << health <<"\n";
 }
 
 bool Player::atackCooldown(sf::Time delta_time)

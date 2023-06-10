@@ -78,8 +78,8 @@ void GameControl::playerAtack()
 
 GameControl::GameControl(sf::RenderWindow* window)
 	:camera(static_cast<sf::Vector2f>(window->getSize()) / 2.f, static_cast<sf::Vector2f>(window->getSize())),
-	map(map_size)
-	
+	map(map_size),
+	GUI(*window)
 {
 	//piêkny celownik
 	sf::Image target;
@@ -233,7 +233,7 @@ void GameControl::draw(sf::RenderWindow& _window)
 {
 	camera.setCenter(player.getPosition());
 	_window.setView(camera);
-	window->clear();
+	_window.clear();
 	map.draw(&_window);
 	for (const auto& enemy : enemies) {
 		enemy->animate(frame_time);
@@ -251,7 +251,13 @@ void GameControl::draw(sf::RenderWindow& _window)
 		missile->animate(frame_time);
 		missile->draw(&_window);
 	}
-	window->display();
+	_window.setView(_window.getDefaultView());
+	//interface
+	GUI.draw(&_window);
+
+
+	_window.setView(camera);
+	_window.display();
 }
 
 sf::Vector2f GameControl::randomPosition(sf::Vector2f map_size)

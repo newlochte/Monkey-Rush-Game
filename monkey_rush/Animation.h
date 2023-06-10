@@ -33,7 +33,7 @@ public:
 
 	Animation(sf::Vector2f size);
 
-	Animation(sf::Vector2f size, sf::Texture &texture);
+	Animation(sf::Vector2f size, sf::Texture &texture, bool one_frame = false);
 
 	void animate(sf::Time time);
 
