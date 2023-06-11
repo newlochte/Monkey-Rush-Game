@@ -58,10 +58,29 @@ bool Enemy::canAtack(Player player, sf::Time time_elapsed)
 	return state;
 }
 
-bool Enemy::doDamage(int damage)
+void Enemy::giveDebuff(int debuf)
 {
-	healt -= damage;
-	return healt <= 0;
+	if (debuf & 0b01) velocity *= 0.5;
+	if (debuf & 0b10) DoT = 5;
+}
+
+void Enemy::doDoT(sf::Time delta_time)
+{
+	if (DoT != 0) {
+		DoT_timer += delta_time.asSeconds();
+		if (DoT_timer >= 1) {
+			health -= DoT;
+			DoT_timer--;
+		}
+	}
+}
+
+bool Enemy::doDamage(std::pair<int,int> damage)
+{
+	if (damage.second & 0b01) velocity *= 0.5;
+	if (damage.second & 0b10) DoT = 5;
+	health -= damage.first;
+	return health <= 0;
 }
 
 void Enemy::move(sf::Vector2f& offset)

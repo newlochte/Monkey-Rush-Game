@@ -6,7 +6,9 @@ Range::Range(sf::Vector2f position)
 	Enemy::setTexture(path);
 	animation.setAnimationSpeed(4);
 	animation.setFrameSize(sf::Vector2f(64, 64));
-	//distance_to_player = 400.f;
+	
+	health = 50;
+	velocity = 150;
 }
 
 void Range::moveToPlayer(Player player, sf::Time delta_time)
