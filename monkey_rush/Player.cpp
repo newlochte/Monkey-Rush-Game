@@ -47,20 +47,29 @@ void Player::playerMovement(sf::Vector2f movement_vector, sf::Time delta_time)
 void Player::doDamage(int damage_done)
 {
 	health -= damage_done;
-	//std::cout << health <<"\n";
+	std::cout << health <<"\n";
 }
 
 bool Player::atackCooldown(sf::Time delta_time)
 {
-	if (atack_timer > 0.0) atack_timer -= delta_time.asSeconds();
 	if (atack_timer <= 0.0) return true;
 	return false;
+}
+
+void Player::update_timers(sf::Time delta_time)
+{
+	if (atack_timer > 0.0) atack_timer -= delta_time.asSeconds();
+}
+
+void Player::gunChange()
+{
+	gun = gun_type((gun + 1) % 3);
 }
 
 int Player::getAtack()
 {
 	atack_timer = atack_cooldown;
-	return weapon;
+	return gun;
 }
 
 

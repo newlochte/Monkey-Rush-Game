@@ -79,7 +79,7 @@ void GameControl::playerAtack()
 GameControl::GameControl(sf::RenderWindow* window)
 	:camera(static_cast<sf::Vector2f>(window->getSize()) / 2.f, static_cast<sf::Vector2f>(window->getSize())),
 	map(map_size),
-	GUI(*window)
+	GUI(*window, player)
 {
 	//piêkny celownik
 	sf::Image target;
@@ -115,9 +115,15 @@ void GameControl::inputs()
 		if (event.type == sf::Event::Closed)
 			window->close();
 		if (event.type == sf::Event::KeyPressed) {
+			//zmiany stanu gry pausa etc.
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) window->close();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)) 
+			{
+				player.gunChange();
+				GUI.update();
+			}
 		}
-		//zmiany stanu gry pausa etc.
+
 	}
 	
 	//strzelanie
@@ -178,12 +184,13 @@ void GameControl::actions()
 	for (auto it = enemy_missiles.begin(); it != enemy_missiles.end();) {
 		(*it)->update(frame_time);
 		if ((*it)->expired() ) { 
-			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(),enemy_missiles.end(),(*it)));
+			it = enemy_missiles.erase(it);
 		}
 		else if ((*it)->isColliding(player)) {
 			(*it)->hit();
 			player.doDamage((*it)->getDamageInfo().first);
-			it = enemy_missiles.erase(std::remove(enemy_missiles.begin(), enemy_missiles.end(), (*it)));
+			GUI.update();
+			it = enemy_missiles.erase(it);
 		}
 		else {
 			it++;
@@ -196,37 +203,44 @@ void GameControl::actions()
 		float radius = (*it)->getDamageInfo().second;
 		if ((*it)->expired()) {
 			to_delete = true;
+			//strza³y z rakiety
 			if (radius >= 1.1) {
 				for (auto enemy = enemies.begin(); enemy != enemies.end();) {
-					if ( (*enemy)->vectorLenght( (*it)->getPosition() ) <= radius ) {
-						if((*enemy)->doDamage((*it)->getDamageInfo().first))
-							enemy = enemies.erase(
-								std::remove(enemies.begin(), enemies.end(), (*enemy)));
+					std::cout << "loop\n";
+					if ( (*enemy)->distance( (*it)->getPosition() ) <= radius ) {
+						if ((*enemy)->doDamage((*it)->getDamageInfo().first)) {
+							std::cout << "damage! ";
+							enemy = enemies.erase((enemy));
+							points++;
+							GUI.updateScore(points);
+						}
 					}
-					else enemy++;
+					else { enemy++; }
+					std::cout << (enemy == enemies.end());
 				}
+				std::cout << "out of loop\n";
 			}
 		}
 		if (radius < 1.1) {
 			for (auto enemy = enemies.begin(); enemy != enemies.end();) {
 				if ((*it)->isColliding(*(*enemy)) && 
 					(*enemy)->doDamage((*it)->getDamageInfo().first)) {
-						enemy = enemies.erase(
-							std::remove(enemies.begin(), enemies.end(), (*enemy)) );
+						enemy = enemies.erase(enemy);
+						points++;
+						GUI.updateScore(points);
 						to_delete = true;
 				}
 				else enemy++;
 			}
 		}
-		
-		
 		if(!to_delete) {
 			it++;
 		}
 		else {
-			it = player_missiles.erase(std::remove(player_missiles.begin(), player_missiles.end(), (*it)));
+			it = player_missiles.erase(it);
 		}
 	}
+	player.update_timers(frame_time);
 }
 
 void GameControl::draw(sf::RenderWindow& _window)

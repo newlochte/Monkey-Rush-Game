@@ -13,6 +13,7 @@ protected:
     float atack_timer;
 
     void setTexture(std::string path);
+    float vectorLenght(sf::Vector2f v);
 public:
     Enemy(sf::Vector2f position);
     Enemy(sf::Vector2f position, sf::Vector2f size);
@@ -28,7 +29,5 @@ public:
     void move(float x, float y);
     void bounceOfEnemy(Enemy* other, sf::Time delta_time);
     bool doDamage(int damage);
-    
-    float vectorLenght(sf::Vector2f v);
 };
 

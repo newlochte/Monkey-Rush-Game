@@ -71,3 +71,9 @@ void Entity::animate(sf::Time time)
 	animation.animate(time);
 }
 
+float Entity::distance(sf::Vector2f distance_to)
+{
+	sf::Vector2f distance = getPosition() - distance_to;
+	return sqrt(distance.x * distance.x + distance.y * distance.y);;
+}
+

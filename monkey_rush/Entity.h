@@ -32,5 +32,6 @@ public:
 	const sf::Vector2f getPosition();
 
 	void animate(sf::Time time);
+	float distance(sf::Vector2f distance_to);
 };
 

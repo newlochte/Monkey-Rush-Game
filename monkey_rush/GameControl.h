@@ -33,6 +33,7 @@ class GameControl
 
 	//liczniki przeciwników i bonusów
 	int enemies_count;
+	int points = 0;
 
 	//dane do sterowania
 	bool play_with_controller = false;

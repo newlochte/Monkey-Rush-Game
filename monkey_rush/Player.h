@@ -5,6 +5,7 @@ class Player :
     public Entity
 {
 public:
+    friend class Interface;
     Player();
 
     void move(sf::Vector2f offset);
@@ -15,12 +16,15 @@ public:
     int getAtack();
     bool atackCooldown(sf::Time delta_time);
 
+    void update_timers(sf::Time delta_time);
+
+    void gunChange();
 
     enum gun_type {
         mini, ak, bomb
     };
     enum efeckts {
-        none = 0b00, freez = 0b01, burn = 0b10
+        none = 0, freez = 1 << 0, burn = 1 << 1
     };
 
 private:
@@ -29,10 +33,9 @@ private:
     std::string path = "img\\Explorer_animation.png";
 
     int health = 1000;
-    int weapon = 1;
     float atack_cooldown = 0.2f;
     float atack_timer = 0.0;
 
     gun_type gun = ak;
-    int gun_efeckt = (int)none;
+    int gun_efeckt = (int)freez;
 };
