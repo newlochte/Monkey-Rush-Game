@@ -31,12 +31,14 @@ public:
     };
 
     Missile(sf::Vector2f position, sf::Vector2f destination, type amo);
+    Missile(sf::Vector2f position, sf::Vector2f destination, type amo, int efeckt);
 
     void update(sf::Time time_elasped);
     void hit();
 
     bool expired();
 
+    float getDamageRadius();
     std::pair<int,float> getDamageInfo();
 
 private:
@@ -45,6 +47,7 @@ private:
     sf::Vector2f destination_vector;
     float velocity;
     std::string path;
+    int efeckt;
 
     float vectorLenght(sf::Vector2f v);
     

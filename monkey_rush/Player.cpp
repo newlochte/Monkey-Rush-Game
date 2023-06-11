@@ -72,4 +72,9 @@ int Player::getAtack()
 	return gun;
 }
 
+int Player::getEfeckt()
+{
+	return gun_efeckt;
+}
+
 

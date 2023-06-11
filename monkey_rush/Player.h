@@ -14,6 +14,7 @@ public:
     void playerMovement(sf::Vector2f movement_vector, sf::Time delta_time);
     void doDamage(int damage_done);
     int getAtack();
+    int getEfeckt();
     bool atackCooldown(sf::Time delta_time);
 
     void update_timers(sf::Time delta_time);

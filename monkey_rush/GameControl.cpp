@@ -72,7 +72,8 @@ void GameControl::playerAtack()
 		player_missiles.emplace_back(std::make_unique<Missile>(
 			player.getPosition(), 
 			mouse_pos,
-			(Missile::type)player.getAtack()));
+			(Missile::type)player.getAtack(),
+			player.getEfeckt()));
 	}	
 }
 
@@ -163,6 +164,7 @@ void GameControl::actions()
 	//enemies movement
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i].get()->moveToPlayer(player, frame_time);
+		enemies[i].get()->doDoT(frame_time);
 		//atak przeciwników
 		if (enemies[i].get()->canAtack(player, frame_time)) {
 			//std::cout << "atakc sent\n";
@@ -200,31 +202,27 @@ void GameControl::actions()
 	for (auto it = player_missiles.begin(); it != player_missiles.end();) {
 		(*it)->update(frame_time);
 		bool to_delete = false;
-		float radius = (*it)->getDamageInfo().second;
+		float radius = (*it)->getDamageRadius();
 		if ((*it)->expired()) {
 			to_delete = true;
 			//strza³y z rakiety
 			if (radius >= 1.1) {
 				for (auto enemy = enemies.begin(); enemy != enemies.end();) {
-					std::cout << "loop\n";
 					if ( (*enemy)->distance( (*it)->getPosition() ) <= radius ) {
-						if ((*enemy)->doDamage((*it)->getDamageInfo().first)) {
-							std::cout << "damage! ";
+						if ((*enemy)->doDamage((*it)->getDamageInfo())) {
 							enemy = enemies.erase((enemy));
 							points++;
 							GUI.updateScore(points);
 						}
 					}
 					else { enemy++; }
-					std::cout << (enemy == enemies.end());
 				}
-				std::cout << "out of loop\n";
 			}
 		}
 		if (radius < 1.1) {
 			for (auto enemy = enemies.begin(); enemy != enemies.end();) {
 				if ((*it)->isColliding(*(*enemy)) && 
-					(*enemy)->doDamage((*it)->getDamageInfo().first)) {
+					(*enemy)->doDamage((*it)->getDamageInfo())) {
 						enemy = enemies.erase(enemy);
 						points++;
 						GUI.updateScore(points);
